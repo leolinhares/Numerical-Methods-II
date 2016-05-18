@@ -26,7 +26,7 @@ double cut(double a, double b, double error){
   while(e > error){
     aux = integral;
     integral = trapezio(a,b,error,N);
-    e = abs((integral - aux)/aux);
+    e = abs(integral - aux)/abs(aux);
     N = N*2;
   }
 
@@ -51,7 +51,7 @@ double trapezio(double a, double b, double error, double N){
          integral = integral + h*f(x)/(pow(cosh(s),2));
       }
       intervals = intervals*2;
-      e = abs(integral-aux);
+      e = abs(integral - aux)/abs(aux);
       cout << integral << endl;
    }
    return 0.5*(b-a)*integral;
