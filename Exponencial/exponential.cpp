@@ -15,26 +15,44 @@ double f(double x){
    return 1/sqrt(x);
 }
 
-double trapezio(double a, double b, double error){
+double trapezio(double a, double b, double error, double N);
+
+double cut(double a, double b, double error){
+  double e = 100000;
+  double aux = 0;
+  double N = 2.0;
+  double integral = 0;
+
+  while(e > error){
+    aux = integral;
+    integral = trapezio(a,b,error,N);
+    e = abs(integral - aux)/abs(aux);
+    N = N*2;
+  }
+
+  return integral;
+}
+
+double trapezio(double a, double b, double error, double N){
    double integral = 0;
    double aux = 0;
-   double h, e, x,s;
+   double h, e, x, s;
    int i;
-   int n = 1;
+   int intervals = 1;
    e = 1000;
-   double N = 15.0;
 
    while(e > error){
       aux = integral;
       integral = 0;
-      h = (N+N)/n;
-      for(i=0;i<n;i++){
-         s = h/2 + h*i + -N;
+      h = (N+N)/intervals;
+      for(i = 0; i < intervals; i++){
+         s = h/2 + h*i + -N; //parametrizacao do intervalo. -N == a, N == b
          x = 0.5*(b+a)+ 0.5*(b-a)*tanh(s);
          integral = integral + h*f(x)/(pow(cosh(s),2));
       }
-      n = n*2;
-      e = abs(integral-aux);
+      intervals = intervals*2;
+      e = abs(integral - aux)/abs(aux);
+      cout << integral << endl;
    }
    return 0.5*(b-a)*integral;
 }
@@ -46,7 +64,7 @@ int main(int argc, const char * argv[]) {
     cin >> a >> b;
     cout << "Digite o erro:\n";
     cin >> e;
-    double result = trapezio(a, b, e);
+    double result = cut(a, b, e);
     cout << "Resultado final: " << result << endl;
     return 0;
 }
