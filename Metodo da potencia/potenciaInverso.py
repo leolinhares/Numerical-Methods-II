@@ -1,7 +1,27 @@
 import numpy as np
 
-a = np.array([[8,1,2], [-1,5,1], [0,1,90]])
-v0 = np.array([1,1,1])
+def reafFile():
+
+	with open('data.txt', 'r') as f:
+		content = f.read().splitlines()
+		
+		# Lendo n
+		n = content[0]
+
+		# Lendo a matriz
+		matrix = []
+		for x in xrange(1,4):
+			line = content[x].split(",")
+			line = [int(i) for i in line]
+			matrix.append(line)
+		matrix = np.asarray(matrix)
+
+		# Lendo o v0
+		v = np.asarray([int(i) for i in content[4].split(",")])
+	
+		# Lendo o erro
+		error = float(content[5])
+	return matrix, n, v, error
 
 def calculate(matrix, epsilon, v):
 	error = float("infinity")
@@ -31,7 +51,22 @@ def calculate(matrix, epsilon, v):
 
 	return autoValor, autoVetor
 
-autoValor, autoVetor = calculate(a, 0.001, v0)
 
-print "Autovalor: ", 1/autoValor
-print "Autovetor: ", autoVetor
+
+def main():
+	m,n,v,error = reafFile()
+	autoValor, autoVetor = calculate(m, error, v)
+	
+	# Escrevendo no arquivo
+	with open('outputInverso.txt',"w") as f:	
+		f.write("Autovalor: \n")
+		f.write(str(1/autoValor))
+		f.write("\n\n")
+		f.write("Autovetor: \n")
+		f.write(" ".join(map(str, autoVetor)))
+		f.close()
+
+	print "Autovalor: ", 1/autoValor
+	print "Autovetor: ", autoVetor
+
+if __name__ == "__main__": main()
