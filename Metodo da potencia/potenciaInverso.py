@@ -1,6 +1,6 @@
 import numpy as np
 
-a = np.array([[-5, 5, -6],[-4,7,-12],[-2,-2,5]])
+a = np.array([[8,1,2], [-1,5,1], [0,1,90]])
 v0 = np.array([1,1,1])
 
 def calculate(matrix, epsilon, v):

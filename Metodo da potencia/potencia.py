@@ -1,7 +1,28 @@
 import numpy as np
+import itertools as it
 
-a = np.array([[-5, 5, -6],[-4,7,-12],[-2,-2,5]])
-v0 = np.array([1,1,1])
+def reafFile():
+
+	with open('data.txt', 'r') as f:
+		content = f.read().splitlines()
+		
+		# Lendo n
+		n = content[0]
+
+		# Lendo a matriz
+		matrix = []
+		for x in xrange(1,4):
+			line = content[x].split(",")
+			line = [int(i) for i in line]
+			matrix.append(line)
+		matrix = np.asarray(matrix)
+
+		# Lendo o v0
+		v = np.asarray([int(i) for i in content[4].split(",")])
+	
+		# Lendo o erro
+		error = float(content[5])
+	return matrix, n, v, error
 
 def calculate(matrix, epsilon, v):
 	error = float("infinity")
@@ -18,7 +39,7 @@ def calculate(matrix, epsilon, v):
 
 		# Multiplicacao de matriz por vetor
 		vAtual = np.dot(matrix,autoVetor)
-
+		
 		# produto escalar
 		autoVetorTransposta = autoVetor.T
 		autoValor = np.inner(autoVetorTransposta, vAtual)
@@ -31,7 +52,20 @@ def calculate(matrix, epsilon, v):
 
 	return autoValor, autoVetor
 
-autoValor, autoVetor = calculate(a, 0.001, v0)
+def main():
+	m,n,v,error = reafFile()
+	autoValor, autoVetor = calculate(m, error, v)
+	
+	# Escrevendo no arquivo
+	with open('output.txt',"w") as f:	
+		f.write("Autovalor: \n")
+		f.write(str(autoValor))
+		f.write("\n\n")
+		f.write("Autovetor: \n")
+		f.write(" ".join(map(str, autoVetor)))
+		f.close()
 
-print "Autovalor: ", autoValor
-print "Autovetor: ", autoVetor
+	print "Autovalor: ", autoValor
+	print "Autovetor: ", autoVetor
+
+if __name__ == "__main__": main()
