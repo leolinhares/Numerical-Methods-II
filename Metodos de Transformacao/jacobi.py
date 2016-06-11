@@ -40,7 +40,7 @@ def construct_J(jj, ij, ii, i, j, matrix_order):
 	J_matrix = np.identity(matrix_order)
 	theta = 0
 	if ii == jj:
-		theta = math.pi
+		theta = math.pi/4
 	else:
 		theta = (math.atan(2*ij/(jj-ii)))/2
 
