@@ -5,7 +5,9 @@
 import numpy as np
 
 # matrix = np.array([[3,4,7,9],[4,2,1,8],[7,1,5,2],[9,8,2,1]])
-matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
+# matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
+matrix = np.array([[4,2,2,1],[2,-3,1,1],[2,1,3,1],[1,1,1,2]])
+
 # matrix = np.array([[3,1,4],[1,7,2],[4,2,0]])
 
 def householder(matrix):
@@ -16,12 +18,10 @@ def householder(matrix):
 	for h in xrange(0,2): # so vai ate o 1. coluna 0, coluna 1
 		column = modified_matrix[:,h].copy()
 		q = calculate_householder(column, h) #coluna h da matriz modificada
-		print q
 		hh = hh.dot(q) # nao pode mudar a ordem dessa operacao
 		modified_matrix = q.dot(modified_matrix).dot(q)
-		print modified_matrix
 
-	return modified_matrix
+	return modified_matrix, hh
 
 def calculate_householder(column, column_index):
 	v = column[column_index+1:] # pega os h+1 elementos do vetor. se vetor = 1 2 3 4 5 e h=1 pega 3 4 5
@@ -45,5 +45,7 @@ def calculate_householder(column, column_index):
 
 	q = np.identity(4) - 2*n*n_transpose
 	return q
+
+np.set_printoptions(suppress=True)
 
 print np.around(householder(matrix), decimals=4)

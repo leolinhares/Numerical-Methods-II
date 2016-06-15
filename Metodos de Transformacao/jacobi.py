@@ -53,5 +53,10 @@ def construct_J(jj, ij, ii, i, j, matrix_order):
 
 diagonal, jac = jacobi(matrix, 0.001, 4)
 
-print diagonal.T
-print jac 
+np.set_printoptions(suppress=True)
+
+print diagonal
+print jac
+a,b =  np.linalg.eig(matrix)
+print a
+print b

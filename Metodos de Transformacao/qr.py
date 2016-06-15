@@ -61,8 +61,8 @@ def mount_Qij(ij, jj, i, j):
 
 	return original_Q
 
+np.set_printoptions(suppress=True)
 
-q,r = qr(matrix, 0.001)
-print np.around(q,decimals=2)
+q,r = qr(matrix, 0.0001)
+print q
 print r
-
