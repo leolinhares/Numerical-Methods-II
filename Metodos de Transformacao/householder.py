@@ -10,20 +10,41 @@ matrix = np.array([[4,2,2,1],[2,-3,1,1],[2,1,3,1],[1,1,1,2]])
 
 # matrix = np.array([[3,1,4],[1,7,2],[4,2,0]])
 
-def householder(matrix):
-	hh = np.identity(4)
+
+def reafFile():
+
+	with open('data.txt', 'r') as f:
+		content = f.read().splitlines()
+		
+		# Lendo n
+		n = int(content[0])
+
+		# Lendo a matriz
+		matrix = []
+		for x in xrange(1,n+1):
+			line = content[x].split(",")
+			line = [int(i) for i in line]
+			matrix.append(line)
+		matrix = np.asarray(matrix)
+	
+		# Lendo o erro
+		error = float(content[n+1])
+	return n, matrix, error
+
+def householder(matrix, n):
+	hh = np.identity(n)
 	modified_matrix = matrix
 
 	# para h de 0 ate n-3 (incluindo n-2)
-	for h in xrange(0,2): # so vai ate o 1. coluna 0, coluna 1
+	for h in xrange(0,n-2): # so vai ate o 1. coluna 0, coluna 1
 		column = modified_matrix[:,h].copy()
-		q = calculate_householder(column, h) #coluna h da matriz modificada
+		q = calculate_householder(column, h, n) #coluna h da matriz modificada
 		hh = hh.dot(q) # nao pode mudar a ordem dessa operacao
 		modified_matrix = q.dot(modified_matrix).dot(q)
 
 	return modified_matrix, hh
 
-def calculate_householder(column, column_index):
+def calculate_householder(column, column_index, size):
 	v = column[column_index+1:] # pega os h+1 elementos do vetor. se vetor = 1 2 3 4 5 e h=1 pega 3 4 5
 	norma = np.linalg.norm(v)
 
@@ -43,9 +64,30 @@ def calculate_householder(column, column_index):
 
 	n_transpose = n[:,None] # transformando o array n em um array vetor (array coluna), que nao existe no numpy
 
-	q = np.identity(4) - 2*n*n_transpose
+	q = np.identity(size) - 2*n*n_transpose
 	return q
 
-np.set_printoptions(suppress=True)
 
-print np.around(householder(matrix), decimals=4)
+def main():
+	n, matrix ,error = reafFile()
+
+	np.set_printoptions(suppress=True, precision=4)
+	
+	t_matrix, hh_matrix = householder(matrix, n)
+
+	print matrix
+	print t_matrix
+	print hh_matrix
+
+	with open('outputHH.txt',"w") as f:	
+		f.write("Matrix Original: \n")
+		f.write(" \n".join(map(str, matrix)))
+		f.write("\n\n")
+		f.write("Matrix Triangular: \n")
+		f.write(" \n".join(map(str, t_matrix)))
+		f.write("\n\n")
+		f.write("Matrix de Householder: \n")
+		f.write(" \n".join(map(str, hh_matrix)))
+		f.close()
+
+if __name__ == "__main__": main()
