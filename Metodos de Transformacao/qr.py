@@ -92,7 +92,7 @@ def main():
 	print "\nMatriz Diagonal: \n"
 	print autovalor
 	print "\nMatriz Acumulada: \n"
-	print autovetor
+	print autovetor/autovetor[n-1]
 	# with open('outputHH.txt',"w") as f:	
 	# 	f.write("Matrix Original: \n")
 	# 	f.write(" \n".join(map(str, matrix)))

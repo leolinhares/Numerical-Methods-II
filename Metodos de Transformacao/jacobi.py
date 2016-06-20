@@ -86,7 +86,7 @@ def main():
 	print "\nMatriz Diagonal: \n"
 	print diagonal
 	print "\nMatriz Jacobi: \n"
-	print jac
+	print jac/jac[n-1]
 	# with open('outputHH.txt',"w") as f:	
 	# 	f.write("Matrix Original: \n")
 	# 	f.write(" \n".join(map(str, matrix)))
