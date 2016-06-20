@@ -6,16 +6,35 @@ import numpy as np
 import math
 
 matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
-matrix_order = 4 
 
-def qr(matrix, error):
+def reafFile():
+
+	with open('data.txt', 'r') as f:
+		content = f.read().splitlines()
+		
+		# Lendo n
+		n = int(content[0])
+
+		# Lendo a matriz
+		matrix = []
+		for x in xrange(1,n+1):
+			line = content[x].split(",")
+			line = [int(i) for i in line]
+			matrix.append(line)
+		matrix = np.asarray(matrix)
+	
+		# Lendo o erro
+		error = float(content[n+1])
+	return n, matrix, error
+
+def qr(matrix, error, matrix_order):
 	original_Q = np.identity(matrix_order)
 	modified_matrix = matrix
 	norm = float("infinity")
 
 	while norm > error:
 
-		Q, R = obtain_QR(modified_matrix)
+		Q, R = obtain_QR(modified_matrix,matrix_order)
 		
 		new_modified_matrix = R.dot(Q)
 		
@@ -31,7 +50,7 @@ def qr(matrix, error):
 	return modified_matrix, original_Q
 
 
-def obtain_QR(matrix):
+def obtain_QR(matrix, matrix_order):
 	original_Q = np.identity(matrix_order)
 	# da coluna 0 ate a coluna n-1
 	for j in xrange(0,matrix_order-1):
@@ -41,14 +60,14 @@ def obtain_QR(matrix):
 			ij = matrix[i,j]
 			jj = matrix[j,j]
 
-			modified_Q = mount_Qij(ij, jj, i, j)
+			modified_Q = mount_Qij(ij, jj, i, j,matrix_order)
 			modified_matrix = (modified_Q.T).dot(matrix)
 			original_Q = original_Q.dot(modified_Q)
 			matrix = modified_matrix
 
 	return original_Q, modified_matrix
 
-def mount_Qij(ij, jj, i, j):
+def mount_Qij(ij, jj, i, j,matrix_order):
 	original_Q = np.identity(matrix_order)
 	if jj == 0:
 		theta = math.pi/2
@@ -61,8 +80,28 @@ def mount_Qij(ij, jj, i, j):
 
 	return original_Q
 
-np.set_printoptions(suppress=True)
+def main():
+	n, matrix ,error = reafFile()
 
-q,r = qr(matrix, 0.0001)
-print q
-print r
+	np.set_printoptions(suppress=True, precision=4)
+	
+	autovalor,autovetor = qr(matrix, error, n)
+
+	print "Matriz Original: \n"
+	print matrix
+	print "\nMatriz Diagonal: \n"
+	print autovalor
+	print "\nMatriz Acumulada: \n"
+	print autovetor
+	# with open('outputHH.txt',"w") as f:	
+	# 	f.write("Matrix Original: \n")
+	# 	f.write(" \n".join(map(str, matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix Triangular: \n")
+	# 	f.write(" \n".join(map(str, t_matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix de Householder: \n")
+	# 	f.write(" \n".join(map(str, hh_matrix)))
+	# 	f.close()
+
+if __name__ == "__main__": main()

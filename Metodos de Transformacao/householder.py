@@ -6,7 +6,7 @@ import numpy as np
 
 # matrix = np.array([[3,4,7,9],[4,2,1,8],[7,1,5,2],[9,8,2,1]])
 # matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
-matrix = np.array([[4,2,2,1],[2,-3,1,1],[2,1,3,1],[1,1,1,2]])
+# matrix = np.array([[4,2,2,1],[2,-3,1,1],[2,1,3,1],[1,1,1,2]])
 
 # matrix = np.array([[3,1,4],[1,7,2],[4,2,0]])
 
@@ -75,19 +75,22 @@ def main():
 	
 	t_matrix, hh_matrix = householder(matrix, n)
 
+	print "Matriz Original: \n"
 	print matrix
+	print "\nMatriz Triangular: \n"
 	print t_matrix
+	print "\nMatriz Householder: \n"
 	print hh_matrix
 
-	with open('outputHH.txt',"w") as f:	
-		f.write("Matrix Original: \n")
-		f.write(" \n".join(map(str, matrix)))
-		f.write("\n\n")
-		f.write("Matrix Triangular: \n")
-		f.write(" \n".join(map(str, t_matrix)))
-		f.write("\n\n")
-		f.write("Matrix de Householder: \n")
-		f.write(" \n".join(map(str, hh_matrix)))
-		f.close()
+	# with open('outputHH.txt',"w") as f:	
+	# 	f.write("Matrix Original: \n")
+	# 	f.write(" \n".join(map(str, matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix Triangular: \n")
+	# 	f.write(" \n".join(map(str, t_matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix de Householder: \n")
+	# 	f.write(" \n".join(map(str, hh_matrix)))
+	# 	f.close()
 
 if __name__ == "__main__": main()

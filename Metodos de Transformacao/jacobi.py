@@ -6,8 +6,30 @@
 import numpy as np
 import math
 
-matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
+# matrix = np.array([[4,2,2,1],[2,-3,1,1],[2,1,3,1],[1,1,1,2]])
+
+# matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
 #matrix = np.array([[1,2],[3,4]])
+
+def reafFile():
+
+	with open('data.txt', 'r') as f:
+		content = f.read().splitlines()
+		
+		# Lendo n
+		n = int(content[0])
+
+		# Lendo a matriz
+		matrix = []
+		for x in xrange(1,n+1):
+			line = content[x].split(",")
+			line = [int(i) for i in line]
+			matrix.append(line)
+		matrix = np.asarray(matrix)
+	
+		# Lendo o erro
+		error = float(content[n+1])
+	return n, matrix, error
 
 def jacobi(matrix, error, matrix_order):
 	modified_matrix = matrix
@@ -51,12 +73,29 @@ def construct_J(jj, ij, ii, i, j, matrix_order):
 
 	return J_matrix
 
-diagonal, jac = jacobi(matrix, 0.001, 4)
 
-np.set_printoptions(suppress=True)
+def main():
+	n, matrix ,error = reafFile()
 
-print diagonal
-print jac
-a,b =  np.linalg.eig(matrix)
-print a
-print b
+	np.set_printoptions(suppress=True, precision=4)
+	
+	diagonal, jac = jacobi(matrix, error, n)
+
+	print "Matriz Original: \n"
+	print matrix
+	print "\nMatriz Diagonal: \n"
+	print diagonal
+	print "\nMatriz Jacobi: \n"
+	print jac
+	# with open('outputHH.txt',"w") as f:	
+	# 	f.write("Matrix Original: \n")
+	# 	f.write(" \n".join(map(str, matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix Triangular: \n")
+	# 	f.write(" \n".join(map(str, t_matrix)))
+	# 	f.write("\n\n")
+	# 	f.write("Matrix de Householder: \n")
+	# 	f.write(" \n".join(map(str, hh_matrix)))
+	# 	f.close()
+
+if __name__ == "__main__": main()
