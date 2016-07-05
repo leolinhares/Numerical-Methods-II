@@ -13,7 +13,7 @@ import math
 
 def reafFile():
 
-	with open('data.txt', 'r') as f:
+	with open('dataT.txt', 'r') as f:
 		content = f.read().splitlines()
 		
 		# Lendo n
@@ -23,7 +23,7 @@ def reafFile():
 		matrix = []
 		for x in xrange(1,n+1):
 			line = content[x].split(",")
-			line = [int(i) for i in line]
+			line = [float(i) for i in line]
 			matrix.append(line)
 		matrix = np.asarray(matrix)
 	
@@ -86,7 +86,7 @@ def main():
 	print "\nMatriz Diagonal: \n"
 	print diagonal
 	print "\nMatriz Jacobi: \n"
-	print jac/jac[n-1]
+	print jac
 	# with open('outputHH.txt',"w") as f:	
 	# 	f.write("Matrix Original: \n")
 	# 	f.write(" \n".join(map(str, matrix)))

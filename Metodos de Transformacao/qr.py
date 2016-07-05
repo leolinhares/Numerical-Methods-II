@@ -5,11 +5,11 @@
 import numpy as np
 import math
 
-matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
+# matrix = np.array([[4,1,-2,2],[1,2,0,1],[-2,0,3,-2],[2,1,-2,-1]])
 
 def reafFile():
 
-	with open('data.txt', 'r') as f:
+	with open('data2.txt', 'r') as f:
 		content = f.read().splitlines()
 		
 		# Lendo n
@@ -92,7 +92,7 @@ def main():
 	print "\nMatriz Diagonal: \n"
 	print autovalor
 	print "\nMatriz Acumulada: \n"
-	print autovetor/autovetor[n-1]
+	print autovetor
 	# with open('outputHH.txt',"w") as f:	
 	# 	f.write("Matrix Original: \n")
 	# 	f.write(" \n".join(map(str, matrix)))

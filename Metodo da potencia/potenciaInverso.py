@@ -10,24 +10,23 @@ def reafFile():
 
 		# Lendo a matriz
 		matrix = []
-		for x in xrange(1,4):
+		for x in xrange(1,6):
 			line = content[x].split(",")
 			line = [int(i) for i in line]
 			matrix.append(line)
 		matrix = np.asarray(matrix)
 
 		# Lendo o v0
-		v = np.asarray([int(i) for i in content[4].split(",")])
+		v = np.asarray([int(i) for i in content[6].split(",")])
 	
 		# Lendo o erro
-		error = float(content[5])
+		error = float(content[7])
 	return matrix, n, v, error
 
 def calculate(matrix, epsilon, v):
 	error = float("infinity")
 	autoValor = float("infinity")	
 	vAtual = v
-	autoVetor = np.array([1,1,1])
 
 	while error > epsilon :
 		ultimoAutoValor = autoValor
@@ -67,6 +66,6 @@ def main():
 		f.close()
 
 	print "Autovalor: ", 1/autoValor
-	print "Autovetor: ", autoVetor
+	print "Autovetor: ", autoVetor/autoVetor[4]
 
 if __name__ == "__main__": main()
