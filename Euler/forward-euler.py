@@ -1,7 +1,7 @@
 import numpy as np
 
 # Exemplo do trabalho final da disciplina
-m1 = 20.0 
+m1 = 20.0
 m2 = 15.0
 f1 = 200.0
 f2 = 120.0
@@ -30,8 +30,9 @@ def state(u,v):
 
 def forwardEuler(tempo,timeInterval):
 	anteriorState = s0
-	for i in xrange(0,int(tempo/timeInterval)):
+	for _ in xrange(0,int(tempo/timeInterval)):
 		s = anteriorState + np.multiply(timeInterval,state(anteriorState[0],anteriorState[1]))
+		print s
 		anteriorState = s
 	return s
 
